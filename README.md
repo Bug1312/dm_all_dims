@@ -1,4 +1,5 @@
 # DM: All Dimensions Addon
+Dalek Mod addon that adds in all dimensions to the dimensional selector via code.
 
 ## Roadmap
 - Adding blacklist

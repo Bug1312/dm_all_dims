@@ -25,7 +25,6 @@ gradle
 eclipse
 run
 svr
-gradle.properties
 src/generated
 src/test
 mods

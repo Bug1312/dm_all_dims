@@ -1,0 +1,32 @@
+modLoader="javafml"
+loaderVersion="[30,)"
+license="GPL-3.0-only"
+issueTrackerURL="https://github.com/Bug1312/dm_all_dims/issues"
+[[mods]]
+modId="dm_all_dims"
+version="1.0.0"
+displayName="DM: All Dimensions"
+displayURL="https://github.com/Bug1312/dm_all_dims"
+authors="Bug1312"
+description='''A mod that adds in every dimension to the dimensional selector, including modded!'''
+
+[[dependencies.dm_all_dims]]
+    modId="forge"
+    mandatory=true
+    versionRange="[30,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.dm_all_dims]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.4,1.16.5]"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.dm_all_dims]]
+    modId="dalekmod"
+    mandatory=true
+    versionRange="[65.1.0,)"
+    ordering="NONE"
+    side="BOTH"

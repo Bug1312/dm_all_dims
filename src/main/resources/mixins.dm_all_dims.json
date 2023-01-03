@@ -1,0 +1,9 @@
+{
+	"compatibilityLevel": "JAVA_8",
+	"minVersion": "0.7.10",
+	"package": "com.bug1312.dm_all_dims.mixins",
+	"refmap": "mixins.dm_all_dims.refmap.json",
+	"required": true,
+	"mixins": ["TardisLocationListenerMixin"],
+	"server": ["TardisLocationListenerMixin"]
+}

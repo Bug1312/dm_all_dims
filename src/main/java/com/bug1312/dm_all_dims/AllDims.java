@@ -15,16 +15,27 @@
 
 package com.bug1312.dm_all_dims;
 
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 
+import com.swdteam.common.init.DMTardis;
 import com.swdteam.common.tardis.data.TardisLocationRegistry;
 import com.swdteam.common.tardis.data.TardisLocationRegistry.TardisLocation;
 
+import net.minecraft.advancements.criterion.ChangeDimensionTrigger;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.scoreboard.ScoreboardSaveData;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.PlayerData;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -34,6 +45,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 @Mod(AllDims.MOD_ID)
 public class AllDims {
 	public static final String MOD_ID = "dm_all_dims";
+	public static Map<RegistryKey<World>, TardisLocation> REGISTRY_BEFORE_MOD;
 
 	public AllDims() {
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStart);
@@ -47,6 +59,7 @@ public class AllDims {
 	
 	public static void addDimensions() {
 		if (ServerLifecycleHooks.getCurrentServer() == null) return;
+		REGISTRY_BEFORE_MOD = TardisLocationRegistry.getLocationRegistry();
 		Set<RegistryKey<World>> dimensions = ServerLifecycleHooks.getCurrentServer().levelKeys();
 
 		dimensions.forEach(dim -> {
@@ -62,6 +75,19 @@ public class AllDims {
 			} catch (IllegalAccessException err) { err.printStackTrace(); }
 		});
 	}
+	
+	public static Map<RegistryKey<World>, TardisLocation> getLocationsForPlayer(BlockPos pos) {
+		Map<RegistryKey<World>, TardisLocation> newMap = TardisLocationRegistry.getLocationRegistry().entrySet().stream()
+				.filter(entry -> {			
+					return !isBlackListed(entry);
+					}).collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+		return newMap;
+	}
+	
+	private static boolean isBlackListed(Map.Entry<RegistryKey<World>, TardisLocation> entry) {
+		return Arrays.asList(Config.SERVER.blacklist.get()).contains(entry.getKey().location().toString());
+	}
+
 	
 }
 
